@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+model User {
+  id           Int           @id @default(autoincrement())
+  username     String
+  password     String
+  email        String
+  balance      Float
+  transactions Transaction[]
+}
+
+model Game {
+  id           Int           @id @default(autoincrement())
+  name         String
+  price        Float
+  stock        Int
+  gameType     GameType      @relation(fields: [gameTypeId], references: [id])
+  gameTypeId   Int
+  transactions Transaction[]
+}
+ 
+model Transaction {
+  id              Int       @id @default(autoincrement())
+  transactionDate DateTime
+  status          String
+  user            User      @relation(fields: [userId], references: [id])
+  userId          Int
+  game            Game      @relation(fields: [gameId], references: [id])
+  gameId          Int
+  Payment         Payment[]
+}
+
+model Payment {
+  id            Int         @id @default(autoincrement())
+  paymentDate   DateTime
+  amount        Float
+  paymentMethod String
+  status        String
+  transaction   Transaction @relation(fields: [transactionId], references: [id])
+  transactionId Int
+}
+
+model GameType {
+  id       Int    @id @default(autoincrement())
+  TypeName String
+  Game     Game[]
+}
