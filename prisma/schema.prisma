@@ -26,7 +26,7 @@ model Game {
   name         String
   price        Float
   stock        Int
-  gameType     GameType      @relation(fields: [gameTypeId], references: [id])
+  gameType     GameType      @relation(fields: [gameTypeId], references: [id], onDelete: Cascade,onUpdate: Cascade)
   gameTypeId   Int
   transactions Transaction[]
 }
@@ -35,9 +35,9 @@ model Transaction {
   id              Int       @id @default(autoincrement())
   transactionDate DateTime
   status          String
-  user            User      @relation(fields: [userId], references: [id])
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade,onUpdate: Cascade)
   userId          Int
-  game            Game      @relation(fields: [gameId], references: [id])
+  game            Game      @relation(fields: [gameId], references: [id], onDelete: Cascade,onUpdate: Cascade)
   gameId          Int
   Payment         Payment[]
 }
@@ -48,7 +48,7 @@ model Payment {
   amount        Float
   paymentMethod String
   status        String
-  transaction   Transaction @relation(fields: [transactionId], references: [id])
+  transaction   Transaction @relation(fields: [transactionId], references: [id], onDelete: Cascade,onUpdate: Cascade)
   transactionId Int
 }
 
