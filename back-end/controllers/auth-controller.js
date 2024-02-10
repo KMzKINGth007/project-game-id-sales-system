@@ -31,17 +31,17 @@ exports.register = async (req, res, next) => {
 };
 
 exports.login = async (req, res, next) => {
-  const { username, password } = req.body
+  const {username, password} = req.body
   try {
     // validation
-    if (!(username.trim() && password.trim())) {
+    if( !(username.trim() && password.trim()) ) {
       throw new Error('username or password must not blank')
     }
     // find username in db.user
-    const user = await db.user.findFirstOrThrow({ where: { username } })
+    const user = await db.user.findFirstOrThrow({ where : { username }})
     // check password
     const pwOk = await bcrypt.compare(password, user.password)
-    if (!pwOk) {
+    if(!pwOk) {
       throw new Error('invalid login')
     }
     // issue jwt token 
@@ -50,12 +50,12 @@ exports.login = async (req, res, next) => {
       expiresIn: '30d'
     })
     console.log(token)
-    res.json({ token: token })
-  } catch (err) {
+    res.json({token : token})
+  }catch(err) {
     next(err)
   }
 };
 
-exports.getme = (req, res, next) => {
+exports.getme = (req,res,next) => {
   res.json(req.user)
 }
