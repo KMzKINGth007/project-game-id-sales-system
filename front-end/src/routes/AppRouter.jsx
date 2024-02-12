@@ -3,6 +3,7 @@ import LoginForm from '../layout/LoginForm'
 import RegisterForm from '../layout/RegisterForm'
 import useAuth from '../hooks/useAuth'
 import Header from '../layout/Header'
+import AdminHome from '../layout/AdminHome'
 
 
 const guestRouter = createBrowserRouter([
@@ -25,7 +26,10 @@ const userRouter = createBrowserRouter([
     element: <>
       <Header />
       <Outlet />
-    </>
+    </>,
+    children : [
+      {index:true,element: <AdminHome/>}
+    ]
   }
 ])
 

@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 const db = require("../models/db");
 
 exports.register = async (req, res, next) => {
-  const { username, password, confirmPassword, email } = req.body;
+  const { username, password, confirmPassword, email, line, facebook } = req.body;
   try {
     // validation
     if (!(username && password && confirmPassword)) {
@@ -17,11 +17,13 @@ exports.register = async (req, res, next) => {
     console.log(hashedPassword);
     const data = {
       username,
-      password : hashedPassword,
-      email
+      password: hashedPassword,
+      email,
+      line,
+      facebook
     };
 
-    const rs = await db.user.create({ data  })
+    const rs = await db.user.create({ data })
     console.log(rs)
 
     res.json({ msg: 'Register successful' })
@@ -31,17 +33,17 @@ exports.register = async (req, res, next) => {
 };
 
 exports.login = async (req, res, next) => {
-  const {username, password} = req.body
+  const { username, password } = req.body
   try {
     // validation
-    if( !(username.trim() && password.trim()) ) {
+    if (!(username.trim() && password.trim())) {
       throw new Error('username or password must not blank')
     }
     // find username in db.user
-    const user = await db.user.findFirstOrThrow({ where : { username }})
+    const user = await db.user.findFirstOrThrow({ where: { username } })
     // check password
     const pwOk = await bcrypt.compare(password, user.password)
-    if(!pwOk) {
+    if (!pwOk) {
       throw new Error('invalid login')
     }
     // issue jwt token 
@@ -50,12 +52,17 @@ exports.login = async (req, res, next) => {
       expiresIn: '30d'
     })
     console.log(token)
-    res.json({token : token})
-  }catch(err) {
+
+    if (user.role === 'admin') {
+      console.log('HI ADMIN')
+    }
+
+    res.json({ token: token })
+  } catch (err) {
     next(err)
   }
 };
 
-exports.getme = (req,res,next) => {
+exports.getme = (req, res, next) => {
   res.json(req.user)
 }

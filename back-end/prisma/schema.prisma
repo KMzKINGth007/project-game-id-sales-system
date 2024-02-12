@@ -17,13 +17,15 @@ model User {
   username     String        @unique @db.VarChar(255)
   password     String        @db.VarChar(255)
   email        String?
+  line         String?
+  facebook     String?
   role         Role          @default(user)
   transactions Transaction[]
 
   @@map("users")
 }
 
-model Game {
+model Product {
   id           Int           @id @default(autoincrement())
   name         String
   price        Float
@@ -39,7 +41,7 @@ model Transaction {
   status          String
   user            User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId          Int
-  game            Game      @relation(fields: [gameId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  product         Product   @relation(fields: [gameId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   gameId          Int
   Payment         Payment[]
 }
@@ -55,7 +57,7 @@ model Payment {
 }
 
 model GameType {
-  id       Int    @id @default(autoincrement())
+  id       Int       @id @default(autoincrement())
   TypeName String
-  Game     Game[]
+  product  Product[]
 }
