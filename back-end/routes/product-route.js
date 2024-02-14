@@ -1,9 +1,11 @@
-// back-end/routes/product-route.js
-const express = require('express');
-const router = express.Router();
-const authenticate = require('../middlewares/authenticate');
-const productController = require('../controllers/product-controller');
+const express = require('express')
+const router = express.Router()
+const authenticate = require('../middlewares/authenticate')
+const productController = require('../controllers/product-controller')
 
-router.post('/', authenticate, productController.createProduct);
+router.get('/products', authenticate, productController.getProducts)
+router.post('/products', authenticate, productController.createProduct)
+router.put('/:id', authenticate, productController.updateProduct)
+router.delete('/:id', authenticate, productController.deleteProduct)
 
-module.exports = router;
+module.exports = router

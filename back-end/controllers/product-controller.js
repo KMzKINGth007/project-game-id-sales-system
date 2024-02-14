@@ -1,14 +1,57 @@
-// back-end/controllers/product-controller.js
-const db = require('../models/db');
+const db = require('../models/db')
+
+exports.getProducts = async (req, res, next) => {
+  try {
+    const products = await db.product.findMany()
+    res.status(200).json(products)
+  } catch (error) {
+    next(error)
+  }
+}
 
 exports.createProduct = async (req, res, next) => {
   try {
-    const { name, price, stock } = req.body;
-    const newProduct = await db.product.create({
-      data: { name, price, stock }
-    });
-    res.json({ msg: 'Product created successfully', product: newProduct });
+    const product = await db.product.create({
+      data: {
+        name: req.body.name,
+        price: req.body.price,
+        stock: req.body.stock,
+        userId: req.user.id
+      }
+    })
+    res.status(201).json(product)
   } catch (error) {
-    next(error);
+    next(error)
   }
-};
+}
+
+exports.updateProduct = async (req, res, next) => {
+  try {
+    const product = await db.product.update({
+      where: {
+        id: req.params.id
+      },
+      data: {
+        name: req.body.name,
+        price: req.body.price,
+        stock: req.body.stock
+      }
+    })
+    res.status(200).json(product)
+  } catch (error) {
+    next(error)
+  }
+}
+
+exports.deleteProduct = async (req, res, next) => {
+  try {
+    const product = await db.product.delete({
+      where: {
+        id: req.params.id
+      }
+    })
+    res.status(200).json(product)
+  } catch (error) {
+    next(error)
+  }
+}
