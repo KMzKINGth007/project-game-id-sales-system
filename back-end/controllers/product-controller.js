@@ -16,7 +16,7 @@ exports.createProduct = async (req, res, next) => {
         name: req.body.name,
         price: req.body.price,
         stock: req.body.stock,
-        userId: req.user.id
+        gameTypeId: req.body.gameTypeId
       }
     })
     res.status(201).json(product)

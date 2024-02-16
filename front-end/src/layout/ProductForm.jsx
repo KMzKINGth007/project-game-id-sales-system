@@ -15,10 +15,8 @@ export default function ProductForm() {
     const handleSubmit = async e => {
         e.preventDefault()
         try {
-            const rs = await axios.post('http://localhost:8889/products', product, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
-                }
+            const rs = await axios.post('http://localhost:8889/admin/products/', product, {
+                headers : { Authorization : `Bearer ${localStorage.getItem('token')}` }
             })
             console.log(rs)
             if (rs.status === 200) {
@@ -45,8 +43,13 @@ export default function ProductForm() {
           Stock:
           <input type="number" name="stock" value={product.stock} onChange={handleChange} />
         </label>
+        <label>
+          GameType:
+          <input type="number" name="gameType" value={product.gameTypeId} onChange={handleChange} />
+        </label>
         <button type="submit">Submit</button>
       </form>
+      
     </div>
     )
 }

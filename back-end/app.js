@@ -4,6 +4,7 @@ const cors = require('cors')
 const notFound = require('./middlewares/notFound')
 const errorMiddleware = require('./middlewares/error')
 const authRoute = require('./routes/auth-route')
+const adminRoute = require('./routes/product-route')
 const app = express()
 
 app.use(cors())
@@ -11,6 +12,7 @@ app.use(express.json())
 
 // service
 app.use('/auth', authRoute)
+app.use('/admin', adminRoute)
 app.use('/useronly', (req, res, next) => {
     res.json({msg: 'Private area'})
 })
@@ -22,5 +24,5 @@ app.use(notFound)
 app.use(errorMiddleware)
 
 
-let port = process.env.PORT || 8000
+let port = process.env.PORT || 8889
 app.listen(port, () => console.log('Server on Port :', port))
