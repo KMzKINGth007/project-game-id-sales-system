@@ -4,7 +4,7 @@ const cors = require('cors')
 const notFound = require('./middlewares/notFound')
 const errorMiddleware = require('./middlewares/error')
 const authRoute = require('./routes/auth-route')
-const adminRoute = require('./routes/product-route')
+const productRoute = require('./routes/product-route')
 const app = express()
 
 app.use(cors())
@@ -12,7 +12,7 @@ app.use(express.json())
 
 // service
 app.use('/auth', authRoute)
-app.use('/admin', adminRoute)
+app.use('/product', productRoute)
 app.use('/useronly', (req, res, next) => {
     res.json({msg: 'Private area'})
 })

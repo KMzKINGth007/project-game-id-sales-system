@@ -32,7 +32,7 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="p-[10%] border w-6/6 min-w-[400px] max-w-[50%] max-h-[1069px] mx-auto  mt-[5%] text-center">
+    <div className="p-[10%] border w-6/6 min-w-[400px] max-w-[50%] max-h-[1069px] mx-auto  mt-[8%] text-center">
       <div className="text-3xl mb-5 justify-center">เข้าสู่ระบบ</div>
       <form className="flex flex-col gap-2" onSubmit={hdlSubmit}>
         <label className="form-control w-full max-w-[682px] mx-auto">
