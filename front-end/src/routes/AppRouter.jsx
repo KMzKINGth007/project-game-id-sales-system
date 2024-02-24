@@ -9,7 +9,12 @@ import UserHome from '../layout/UserHome';
 const guestRouter = createBrowserRouter([
   {
     path: '/',
-    
+    element: (
+      <>
+        <Header />
+        <Outlet />
+      </>
+    ),
     children: [
       { index: true, element: <LoginForm /> },
       { path: '/register', element: <RegisterForm /> },

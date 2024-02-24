@@ -9,21 +9,43 @@ exports.getProducts = async (req, res, next) => {
   }
 }
 
-exports.createProduct = async (req, res, next) => {
-  try {
-    const product = await db.product.create({
-      data: {
-        name: req.body.name,
-        price: req.body.price,
-        stock: req.body.stock,
-        gameTypeId: req.body.gameTypeId
-      }
-    })
-    res.status(201).json(product)
-  } catch (error) {
-    next(error)
+const multer = require('multer');
+const path = require('path');
+
+// Set up storage engine for multer
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'upload/images'); // The folder where images will be stored
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname)); // Appending extension
   }
-}
+});
+
+// Initialize upload with the storage engine
+const upload = multer({ storage: storage }).single('imageUrl');
+
+exports.createProduct = async (req, res, next) => {
+  upload(req, res, async (uploadError) => {
+    if (uploadError) {
+      return next(uploadError);
+    }
+    try {
+      const product = await db.product.create({
+        data: {
+          name: req.body.name,
+          price: parseInt(req.body.price),
+          stock: parseInt(req.body.stock),
+          gameTypeId: parseInt(req.body.gameTypeId),
+          imageUrl: req.file ? req.file.path : null
+        }
+      });
+      res.status(201).json(product);
+    } catch (error) {
+      next(error);
+    }
+  });
+};
 
 exports.updateProduct = async (req, res, next) => {
   try {

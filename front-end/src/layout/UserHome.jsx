@@ -7,7 +7,7 @@ export default function UserHome() {
   useEffect(() => {
     const fetchProductData = async () => {
       try {
-        const response = await axios.get('http://localhost:8889/product/addProducts');
+        const response = await axios.get('http://localhost:8889/product/products');
         setProducts(response.data);
       } catch (error) {
         console.error(error);
