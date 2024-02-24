@@ -3,4 +3,67 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+body{
+    box-sizing: border-box;
+    font-family: 'Mitr', sans-serif;
+}
+.main-page{
+    max-width: 1200px;
+}
+.header{
+    justify-content: space-between;
+    max-width: 1200px;
+    background-size: cover;
+    position: relative;
+    background-color: #00000050;
+}
 
+.header-main{
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding-inline: 15px;
+}
+
+.header-bottom {
+    display: flex;
+    max-width: 100%;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding-inline: 15px;
+    background-color: #00000050;
+  }
+  
+  .in-header-bottom {
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    display: flex;
+  }
+  
+  .in-header-bottom-center {
+    width: 100%;
+    margin-inline: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .in-header-bottom-center ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .in-header-bottom-center ul li {
+    list-style: none;
+    margin-inline: 10px;
+    padding-inline: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+ 
