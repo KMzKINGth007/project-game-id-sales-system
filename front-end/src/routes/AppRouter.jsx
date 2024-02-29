@@ -5,6 +5,9 @@ import useAuth from '../hooks/useAuth';
 import Header from '../layout/Header';
 import AdminHome from '../layout/AdminHome';
 import UserHome from '../layout/UserHome';
+import ShopPage from '../layout/ShopPage';
+import HowToPayPage from '../layout/HowToPayPage';
+import ContactPage from '../layout/contactPage';
 
 const guestRouter = createBrowserRouter([
   {
@@ -31,7 +34,13 @@ const userRouter = createBrowserRouter([
         <Outlet />
       </>
     ),
-    children: [{ index: true, element: <UserHome /> }],
+    children: [
+      { index: true, element: <UserHome /> },
+      { path: '/shop', element: <ShopPage /> },
+      { path: '/howtopay', element: <HowToPayPage /> },
+      { path: '/contact', element: <ContactPage /> },
+    ],
+    
   },
 ]);
 

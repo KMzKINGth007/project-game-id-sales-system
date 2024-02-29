@@ -7,7 +7,10 @@ const guestNav = [
 ]
 
 const userNav = [
-  { to: '/', text: 'Home' },
+  { to: '/', text: 'หน้าแรก' },
+  { to: '/shop', text: 'ร้านค้า' },
+  { to: '/howtopay', text: 'วิธีการชำระ' },
+  { to: '/contact', text: 'ติดต่อเรา' },
 ]
 
 export default function Header() {
@@ -22,9 +25,9 @@ export default function Header() {
   }
 
   return (
-    <div className="header">
+    <div className="header min-w-[400px]">
       <div className='header-main'>
-        <div className="header-search">
+        <div className="header-search navbar-start">
           <a className="">Hello, {user?.id ? user.username : 'Guest'}</a>
           {user?.id && (
             <div >
@@ -32,16 +35,12 @@ export default function Header() {
             </div>
           )}
         </div>
-        <div className="header-logo">
+        <div className="header-logo navbar-center">
           <a className="">LOGO</a>
         </div>
-        <div className="header-menu">
-          <ul className="">
-            {finalNav.map(el => (
-              <li key={el.to} >
-                <Link to={el.to}>{el.text}</Link>
-              </li>
-            ))}
+        <div className="header-menu navbar-end ">
+          <ul className="text-end">
+
             {user?.id && (
               <li>
                 <Link to='#' onClick={hdlLogout}>Logout</Link>
@@ -53,8 +52,16 @@ export default function Header() {
       <div className="header-bottom">
         <div className="in-header-bottom">
           <div className="in-header-bottom-center">
-            <ul><li>AAA</li><li>BBB</li><li>CCC</li></ul>
-            </div>
+            {user?.role === 'user' && (
+              <ul className=''>
+                {finalNav.map(el => (
+                  <li key={el.to} >
+                    <Link to={el.to}>{el.text}</Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
       </div>
     </div>

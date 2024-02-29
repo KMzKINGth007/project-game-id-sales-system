@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import ProductForm from "./ProductForm";
+import EditProduct from "./EditProduct";
+
 
 export default function AdminHome() {
   const [products, setProducts] = useState([]);
@@ -23,7 +25,7 @@ export default function AdminHome() {
     <div>
       <h1>หน้าหลัก ADMIN</h1>
       <ProductForm />
-      { JSON.stringify(products) }
+      <EditProduct/>
     </div>
   )
 }

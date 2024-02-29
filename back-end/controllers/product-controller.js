@@ -2,10 +2,19 @@ const db = require('../models/db')
 
 exports.getProducts = async (req, res, next) => {
   try {
-    const products = await db.product.findMany()
-    res.status(200).json(products)
+    const products = await db.product.findMany({})
+    const productList = products.map(product => ({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      stock: product.stock,
+      gameTypeId: product.gameTypeId,
+      imageUrl: product.imageUrl,
+      gameType: product.gameType // Include related data for frontend display
+    }));
+    res.status(200).json(productList);
   } catch (error) {
-    next(error)
+    next(error);
   }
 }
 

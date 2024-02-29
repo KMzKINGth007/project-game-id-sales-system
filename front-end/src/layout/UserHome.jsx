@@ -18,13 +18,19 @@ export default function UserHome() {
   }, []);
 
   return (
-    <div>
+    <div className="user-home">
       <h1>หน้าหลัก USER</h1>
-      <ul>
-        {products.map((product, index) => (
-          <li key={index}>{product.name} - {product.price}</li>
+      <div className="product-cart-container flex flex-wrap justify-start">
+        {products.map((product) => (
+          <div key={product.id} className="product-cart m-4 border rounded p-2">
+            <img className="product-image w-full" src={product.imgUrl} alt={product.name} />
+            <h2 className="product-name">{product.name}</h2>
+            <p className="product-price">Price: {product.price}</p>
+            <p className="product-stock">Stock: {product.stock}</p>
+            <p className="product-type">Type: {product.gameType}</p>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
