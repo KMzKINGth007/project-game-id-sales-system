@@ -10,7 +10,7 @@ exports.getProducts = async (req, res, next) => {
       stock: product.stock,
       gameTypeId: product.gameTypeId,
       imageUrl: product.imageUrl,
-      gameType: product.gameType // Include related data for frontend display
+      gameType: product.gameType
     }));
     res.status(200).json(productList);
   } catch (error) {
@@ -21,13 +21,13 @@ exports.getProducts = async (req, res, next) => {
 const multer = require('multer');
 const path = require('path');
 
-// Set up storage engine for multer
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'upload/images'); // The folder where images will be stored
+    cb(null, 'upload/images');
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname)); // Appending extension
+    cb(null, Date.now() + path.extname(file.originalname));
   }
 });
 

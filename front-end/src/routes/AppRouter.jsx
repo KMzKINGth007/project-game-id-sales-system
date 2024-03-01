@@ -8,6 +8,8 @@ import UserHome from '../layout/UserHome';
 import ShopPage from '../layout/ShopPage';
 import HowToPayPage from '../layout/HowToPayPage';
 import ContactPage from '../layout/contactPage';
+import AdminUserEdit from '../layout/AminUserEdit';
+
 
 const guestRouter = createBrowserRouter([
   {
@@ -53,7 +55,10 @@ const adminRouter = createBrowserRouter([
         <Outlet />
       </>
     ),
-    children: [{ index: true, element: <AdminHome /> }],
+    children: [
+      { index: true, element: <AdminHome /> },
+      { path: '/useredit', element: <AdminUserEdit /> },
+  ],
   },
 ]);
 

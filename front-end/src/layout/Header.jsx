@@ -13,9 +13,15 @@ const userNav = [
   { to: '/contact', text: 'ติดต่อเรา' },
 ]
 
+const adminNav = [
+  { to: '/', text: 'หน้าจัดการสินค้า' },
+  { to: '/useredit', text: 'หน้าจัดการผู้ใช้' }
+]
+
 export default function Header() {
   const { user, logout } = useAuth()
-  const finalNav = user?.id ? userNav : guestNav
+
+
 
   const navigate = useNavigate()
 
@@ -40,7 +46,13 @@ export default function Header() {
         </div>
         <div className="header-menu navbar-end ">
           <ul className="text-end">
-
+            {user?.id ? null : (
+              guestNav.map(el => (
+                <li key={el.to} >
+                  <Link to={el.to}>{el.text}</Link>
+                </li>
+              ))
+            )}
             {user?.id && (
               <li>
                 <Link to='#' onClick={hdlLogout}>Logout</Link>
@@ -54,11 +66,22 @@ export default function Header() {
           <div className="in-header-bottom-center">
             {user?.role === 'user' && (
               <ul className=''>
-                {finalNav.map(el => (
+                {userNav.map(el => (
                   <li key={el.to} >
                     <Link to={el.to}>{el.text}</Link>
                   </li>
                 ))}
+              </ul>
+            )}
+            {user?.role === 'admin' && (
+              <ul className=''>
+                <li>
+                {adminNav.map(el => (
+                  <li key={el.to} >
+                    <Link to={el.to}>{el.text}</Link>
+                  </li>
+                ))}
+                </li>
               </ul>
             )}
           </div>
