@@ -20,18 +20,18 @@ export default function EditProduct() {
 
     return (
         <div>
-          <h1>show product</h1>
-          <div className="grid grid-cols-3 border-t-4">
-          {products.map(product => (
-            <div className="p-4 border-t-10 border-solid border-indigo-500" key={product.id}>
-              <img src={product.imageUrl} alt={product.name} />
-              <p>{product.name}</p>
-              <p>{product.price}</p>
-              <p>{product.stock}</p>
-              <p>{product.gameTypeId}</p>
+          <h1>Edit Product</h1>
+            <div className="grid grid-cols-3 border-t-4">
+                {products.map(product => (
+                    <div className="p-4 border-t-10 border-solid border-indigo-500" key={product.id}>
+                        <img src={`http://localhost:8889/${product.imageUrl}`} alt={product.name} />
+                        <h1>{product.name}</h1>
+                        <p>{product.price}</p>
+                        <p>{product.stock}</p>
+                        <p>{product.gameTypeId}</p>
+                    </div>
+                ))}
             </div>
-          ))}
-        </div>
         </div>
       )
     }

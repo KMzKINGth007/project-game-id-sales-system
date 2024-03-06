@@ -5,10 +5,12 @@ const notFound = require('./middlewares/notFound')
 const errorMiddleware = require('./middlewares/error')
 const authRoute = require('./routes/auth-route')
 const productRoute = require('./routes/product-route')
+
 const app = express()
 
 app.use(cors())
 app.use(express.json())
+app.use(express.static('upload'));
 
 // service
 app.use('/auth', authRoute)

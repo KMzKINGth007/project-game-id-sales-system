@@ -1,7 +1,7 @@
 export default function ContactPage() {
     return (
-        <div className="contact-page">
-            <h1>Contact Page</h1>
+        <div>
+            <h1>หน้าติดต่อ</h1>
         </div>
-    );
+    )
 }

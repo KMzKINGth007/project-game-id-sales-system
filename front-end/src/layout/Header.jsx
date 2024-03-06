@@ -13,6 +13,10 @@ const userNav = [
   { to: '/contact', text: 'ติดต่อเรา' },
 ]
 
+const userMenu = [
+  { to: '/userprofile', text: 'โปรไฟล์' },
+]
+
 const adminNav = [
   { to: '/', text: 'หน้าจัดการสินค้า' },
   { to: '/useredit', text: 'หน้าจัดการผู้ใช้' }
@@ -54,9 +58,24 @@ export default function Header() {
               ))
             )}
             {user?.id && (
-              <li>
-                <Link to='#' onClick={hdlLogout}>Logout</Link>
-              </li>
+              <div className="dropdown dropdown-end">
+                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                  <div className="w-10 rounded-full">
+                    <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                  </div>
+                </div>
+                <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+                  {userMenu.map(el => (
+                    <li key={el.to} >
+                      <Link to={el.to}>{el.text}</Link>
+                    </li>
+                  ))}
+                  <li><a>Settings</a></li>
+                  <li>
+                    <Link to='#' onClick={hdlLogout}>Logout</Link>
+                  </li>
+                </ul>
+              </div>
             )}
           </ul>
         </div>
@@ -75,13 +94,13 @@ export default function Header() {
             )}
             {user?.role === 'admin' && (
               <ul className=''>
-                <li>
-                {adminNav.map(el => (
-                  <li key={el.to} >
-                    <Link to={el.to}>{el.text}</Link>
-                  </li>
-                ))}
-                </li>
+
+                  {adminNav.map(el => (
+                    <li key={el.to} >
+                      <Link to={el.to}>{el.text}</Link>
+                    </li>
+                  ))}
+          
               </ul>
             )}
           </div>

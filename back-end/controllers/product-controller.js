@@ -2,32 +2,21 @@ const db = require('../models/db')
 
 exports.getProducts = async (req, res, next) => {
   try {
-    const products = await db.product.findMany({})
-    const productList = products.map(product => ({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      stock: product.stock,
-      gameTypeId: product.gameTypeId,
-      imageUrl: product.imageUrl,
-      gameType: product.gameType
-    }));
-    res.status(200).json(productList);
+    const products = await db.product.findMany()
+    res.status(200).json(products)
   } catch (error) {
-    next(error);
+    next(error)
   }
 }
 
 const multer = require('multer');
-const path = require('path');
-
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'upload/images');
+    cb(null, 'upload/')
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname));
+    cb(null, Date.now() + '-' + file.originalname)
   }
 });
 
@@ -46,7 +35,7 @@ exports.createProduct = async (req, res, next) => {
           price: parseInt(req.body.price),
           stock: parseInt(req.body.stock),
           gameTypeId: parseInt(req.body.gameTypeId),
-          imageUrl: req.file ? req.file.path : null
+          imageUrl: req.file.filename
         }
       });
       res.status(201).json(product);

@@ -9,6 +9,7 @@ import ShopPage from '../layout/ShopPage';
 import HowToPayPage from '../layout/HowToPayPage';
 import ContactPage from '../layout/contactPage';
 import AdminUserEdit from '../layout/AminUserEdit';
+import UserProfile from '../layout/UserProfile';
 
 
 const guestRouter = createBrowserRouter([
@@ -41,6 +42,7 @@ const userRouter = createBrowserRouter([
       { path: '/shop', element: <ShopPage /> },
       { path: '/howtopay', element: <HowToPayPage /> },
       { path: '/contact', element: <ContactPage /> },
+      { path: '/userprofile', element: <UserProfile /> },
     ],
     
   },
