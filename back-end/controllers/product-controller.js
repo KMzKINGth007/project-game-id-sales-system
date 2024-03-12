@@ -32,6 +32,7 @@ exports.createProduct = async (req, res, next) => {
       const product = await db.product.create({
         data: {
           name: req.body.name,
+          description: req.body.description,
           price: parseInt(req.body.price),
           stock: parseInt(req.body.stock),
           gameTypeId: parseInt(req.body.gameTypeId),
@@ -47,27 +48,37 @@ exports.createProduct = async (req, res, next) => {
 
 exports.updateProduct = async (req, res, next) => {
   try {
+    let updateData = {
+      name: req.body.name,
+      description: req.body.description,
+      price: parseInt(req.body.price),
+      stock: parseInt(req.body.stock),
+      gameTypeId: parseInt(req.body.gameTypeId)
+    };
+    if (req.file) {
+      updateData.imageUrl = req.file.filename;
+    }
     const product = await db.product.update({
       where: {
-        id: req.params.id
+        id: parseInt(req.params.id)
       },
-      data: {
-        name: req.body.name,
-        price: req.body.price,
-        stock: req.body.stock
-      }
-    })
-    res.status(200).json(product)
+      data: updateData
+    });
+    if (!product) {
+      return res.status(404).json({ error: 'Product not found.' });
+    }
+    res.status(200).json(product);
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
+};
+
 
 exports.deleteProduct = async (req, res, next) => {
   try {
     const product = await db.product.delete({
       where: {
-        id: req.params.id
+        id: parseInt(req.params.id)
       }
     })
     res.status(200).json(product)

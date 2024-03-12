@@ -117,6 +117,7 @@
   export default function ProductForm() {
     const [product, setProduct] = useState({
       name: '',
+      description: '',
       price: '',
       stock: '',
       gameTypeId: '',
@@ -156,7 +157,7 @@
     }
   
     return (
-      <div className="p-[5%] border w-6/6 min-w-[400px] max-w-[50%] max-h-[1069px] mx-auto mt-[8%] text-center">
+      <div className="p-[5%] border w-6/6 min-w-[400px] max-w-[50%] max-h-[1069px] mx-auto mt-[10px] text-center">
         <h1>Product Form</h1>
         <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
           <label>
@@ -173,6 +174,15 @@
               type="text"
               name="name"
               value={product.name}
+              onChange={handleChange}
+            />
+          </label>
+          <label>
+            <span>Description</span>
+            <input
+              type="text"
+              name="description"
+              value={product.description}
               onChange={handleChange}
             />
           </label>
