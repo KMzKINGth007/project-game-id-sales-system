@@ -10,8 +10,9 @@ import HowToPayPage from '../layout/HowToPayPage';
 import ContactPage from '../layout/contactPage';
 import AdminUserEdit from '../layout/AminUserEdit';
 import UserProfile from '../layout/UserProfile';
+import ProductDetailsPage from '../layout/ProductDetailsPage';
 
-
+// สร้างเส้นทางสำหรับผู้ใช้ที่ยังไม่ล็อคอิน
 const guestRouter = createBrowserRouter([
   {
     path: '/',
@@ -28,6 +29,7 @@ const guestRouter = createBrowserRouter([
   },
 ]);
 
+// สร้างเส้นทางสำหรับผู้ใช้ที่ล็อคอินแล้ว
 const userRouter = createBrowserRouter([
   {
     path: '/',
@@ -43,11 +45,13 @@ const userRouter = createBrowserRouter([
       { path: '/howtopay', element: <HowToPayPage /> },
       { path: '/contact', element: <ContactPage /> },
       { path: '/userprofile', element: <UserProfile /> },
+      { path: '/product/:id', element: <ProductDetailsPage /> },
     ],
-    
+
   },
 ]);
 
+// สร้างเส้นทางสำหรับผู้ดูแลระบบ (Admin)
 const adminRouter = createBrowserRouter([
   {
     path: '/',
@@ -60,12 +64,14 @@ const adminRouter = createBrowserRouter([
     children: [
       { index: true, element: <AdminHome /> },
       { path: '/useredit', element: <AdminUserEdit /> },
-  ],
+    ],
   },
 ]);
 
 export default function AppRouter() {
-  const { user } = useAuth();
-  const finalRouter = user?.role === 'admin' ? adminRouter : user ? userRouter : guestRouter;
+  const { user } = useAuth();// ใช้ hook useAuth เพื่อตรวจสอบสถานะผู้ใช้
+  // ตรวจสอบสถานะของผู้ใช้และเลือกเส้นทางที่เหมาะสม
+  const finalRouter = user?.role === 'admin' ? adminRouter :  user ? userRouter : guestRouter;
+  // ส่งเส้นทางที่เลือกไปยัง RouterProvider เพื่อให้ RouterProvider ใช้งานเส้นทางนั้น
   return <RouterProvider router={finalRouter} />;
 }

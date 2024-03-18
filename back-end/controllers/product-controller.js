@@ -46,6 +46,23 @@ exports.createProduct = async (req, res, next) => {
   });
 };
 
+exports.getProductById = async (req, res, next) => {
+  try {
+    const productId = parseInt(req.params.id);
+    const product = await db.product.findUnique({
+      where: {
+        id: productId
+      }
+    });
+    if (!product) {
+      return res.status(404).json({ error: 'Product not found.' });
+    }
+    res.status(200).json(product);
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.updateProduct = async (req, res, next) => {
   try {
     let updateData = {
