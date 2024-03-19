@@ -22,15 +22,17 @@ export default function ProductDetailsPage() {
   }, [id]);
 
   return (
-    <div>
+    <div className="">
       {product ? (
-        <div className="product-details">
+        <div className="w-full justify-center items-center ">
           <h1>{product.name}</h1>
-          <img src={`http://localhost:8889/${product.imageUrl}`} alt={product.name} className="mb-3 w-[250px] h-[200px]" />
-                <h2 className="product-name">{product.name}</h2>
-                <p className="product-description">{product.description}</p>
-                <p className="product-price">Price: {product.price}</p>
-                <p className="product-stock">Stock: {product.stock}</p>
+          <div className="">
+            <img src={`http://localhost:8889/${product.imageUrl}`} alt={product.name} className="mb-3 w-[250px] h-[200px]" />
+            <h2 className="product-name">{product.name}</h2>
+            <p className="product-description">{product.description}</p>
+            <p className="product-price">Price: {product.price}</p>
+            <p className="product-stock">Stock: {product.stock}</p>
+          </div>
         </div>
       ) : (
         <p>Loading...</p>

@@ -78,7 +78,7 @@ export default function Header() {
           </ul>
         </div>
       </div>
-      <div className="header-bottom">
+      <div className="header-bottom py-[5px]">
         <div className="in-header-bottom">
           <div className="in-header-bottom-center">
             {user?.role === 'user' && (

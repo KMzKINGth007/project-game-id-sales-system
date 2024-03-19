@@ -55,7 +55,7 @@ export default function EditProduct() {
 
     return (
         <div>
-            <h1>Edit Product</h1>
+            <h1>หน้าจัดการสินค้า</h1>
             <ul>
                 {products.map(product => (
                     <li key={product.id}>
@@ -70,7 +70,7 @@ export default function EditProduct() {
                             </div>
                         ) : (
                             <div className="justify-between w-[100%] flex my-1 border-solid border-2 min-h-[52px]">
-                                <div className="w-[100px]"><img src={`http://localhost:8889/${product.imageUrl}`} alt={product.name} className="mb-3 w-[100px] h-[40px]" /></div>
+                                <div className="w-[100px]"><img src={`http://localhost:8889/${product.imageUrl}`} alt={product.name} className="mb-3 w-[100px] h-[60px]" /></div>
                                 <div className="w-[200px]"><p>Name: {product.name}</p></div>
                                 <div className="w-[600px]"><p>Description: {product.description}</p></div>
                                 <div className="w-[100px]"><p>Price: {product.price}</p></div>
