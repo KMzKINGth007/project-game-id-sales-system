@@ -1,8 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-
-
 export default function AdminUserEdit() {
   const [users, setUser] = useState([]);
   const [editingUser, setEditingUser] = useState(null);

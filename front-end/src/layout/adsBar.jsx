@@ -9,7 +9,7 @@ import fff from "../image/Capture6.png"
 export default function AdsBar() {
     
     return (
-        <div>
+        <div className="bg-black/50">
             <div className="carousel w-full">
                 <div id="item1" className="carousel-item w-full">
                     <img src={aaa} />

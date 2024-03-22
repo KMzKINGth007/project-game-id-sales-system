@@ -6,6 +6,7 @@ const errorMiddleware = require('./middlewares/error')
 const authRoute = require('./routes/auth-route')
 const userRoute = require('./routes/user-route')
 const productRoute = require('./routes/product-route')
+const cartRoute = require('./routes/cart-route')
 
 const app = express()
 
@@ -17,6 +18,7 @@ app.use(express.static('upload'));
 app.use('/auth', authRoute)
 app.use('/user', userRoute)
 app.use('/product', productRoute)
+app.use('/cart', cartRoute)
 app.use('/useronly', (req, res, next) => {
     res.json({msg: 'Private area'})
 })
