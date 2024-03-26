@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 
 const guestNav = [
   { to: '/', text: 'Login' },
@@ -22,6 +23,10 @@ const adminNav = [
   { to: '/', text: 'หน้าจัดการสินค้า' },
   { to: '/useredit', text: 'หน้าจัดการผู้ใช้' }
 ];
+
+const cart = [
+  { to: '/cart', text: 'carticon' },
+]
 
 export default function Header() {
   const { user, logout } = useAuth();
@@ -56,25 +61,31 @@ export default function Header() {
               ))
             )}
             {user?.id && (
-              <div className="dropdown dropdown-end">
-                <div className='flex'>
-                  <div className=''>daws</div>
-                  <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                    <div className="w-10 rounded-full">
-                      <img alt="Avatar" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+              <div className='flex justify-end'>
+                <div className=''>
+                  <Link to='/cart'>
+                    <img src='path_to_your_image' alt='Shopping Cart' />
+                  </Link>
+                </div>
+                <div className="dropdown dropdown-end">
+                  <div className='flex'>
+                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                      <div className="w-10 rounded-full">
+                        <img alt="Avatar" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                      </div>
                     </div>
-                  </div>
-                  <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-                    {userMenu.map(el => (
-                      <li key={el.to} >
-                        <Link to={el.to}>{el.text}</Link>
+                    <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+                      {userMenu.map(el => (
+                        <li key={el.to} >
+                          <Link to={el.to}>{el.text}</Link>
+                        </li>
+                      ))}
+                      <li><a>Settings</a></li>
+                      <li>
+                        <Link to='#' onClick={handleLogout}>Logout</Link>
                       </li>
-                    ))}
-                    <li><a>Settings</a></li>
-                    <li>
-                      <Link to='#' onClick={handleLogout}>Logout</Link>
-                    </li>
-                  </ul>
+                    </ul>
+                  </div>
                 </div>
               </div>
             )}

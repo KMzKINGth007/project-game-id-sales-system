@@ -2,13 +2,13 @@ const db = require("../models/db");
 
 exports.addProductToCard = async (req, res, next) => {
     try {
-        const userId = req.user.id; // ดึงค่า userId จาก req.user.id
+        const userId = req.user.id; 
         const productId = parseInt(req.body.productId);
         const quantity = parseInt(req.body.quantity);
         
         const cart = await db.cart.create({
             data: {
-                userId: userId, // กำหนด userId จาก req.user.id
+                userId: userId, 
                 productId: productId,
                 quantity: quantity,
             }
@@ -30,6 +30,35 @@ exports.getCart = async (req, res, next) => {
             },
             include: {
                 product: true
+            }
+        });
+        res.status(200).json(cart);
+    } catch (error) {
+        next(error);
+    }
+}
+
+exports.updateCart = async (req, res, next) => {
+    try {
+        const cart = await db.cart.update({
+            where: {
+                id: parseInt(req.params.id)
+            },
+            data: {
+                quantity: parseInt(req.body.quantity)
+            }
+        });
+        res.status(200).json(cart);
+    } catch (error) {
+        next(error);
+    }
+}
+
+exports.deleteCart = async (req, res, next) => {
+    try {
+        const cart = await db.cart.delete({
+            where: {
+                id: parseInt(req.params.id)
             }
         });
         res.status(200).json(cart);
