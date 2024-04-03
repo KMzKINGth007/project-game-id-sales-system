@@ -21,6 +21,8 @@ export default function UserHome() {
     fetchProductData();
   }, []);
 
+  
+
   return (
     <div className="user-home">
       <h1>หน้าหลัก USER</h1>

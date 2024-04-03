@@ -26,15 +26,14 @@ export default function ProductDetailsPage() {
       const response = await axios.post(`http://localhost:8889/cart/addProductToCard/${id}`, {
         userId: localStorage.getItem('userId'),
         productId: id,
-        quantity: 1 // จำนวนสินค้าที่ต้องการเพิ่มลงในตะกร้า (เช่น 1 ชิ้น)
+        quantity: 1
       }, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
-      console.log(response.data); // พิมพ์ response ที่ได้รับจากเซิร์ฟเวอร์เพื่อตรวจสอบ
-      // จะเป็นการแจ้งให้ผู้ใช้ทราบว่าสินค้าถูกเพิ่มลงในตะกร้าแล้ว
+      console.log(response.data);
     } catch (error) {
       console.error(error);
-      // จัดการข้อผิดพลาดที่อาจเกิดขึ้นเมื่อส่งคำขอไปยัง API
+
     }
   };
 

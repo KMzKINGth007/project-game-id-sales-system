@@ -5,17 +5,18 @@ export default function EditProduct() {
     const [products, setProducts] = useState([]);
     const [editingProduct, setEditingProduct] = useState(null); // เพิ่ม state เพื่อเก็บข้อมูลของสินค้าที่กำลังแก้ไข
 
+    const fetchProductData = async () => {
+        try {
+            const response = await axios.get('http://localhost:8889/product/', {
+                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+            });
+            setProducts(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     useEffect(() => {
-        const fetchProductData = async () => {
-            try {
-                const response = await axios.get('http://localhost:8889/product/', {
-                    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-                });
-                setProducts(response.data);
-            } catch (error) {
-                console.error(error);
-            }
-        };
         fetchProductData();
     }, []);
 
@@ -35,6 +36,7 @@ export default function EditProduct() {
             console.log("Edit Product", response.data);
 
             setEditingProduct(null);
+            fetchProductData(); 
         } catch (error) {
             console.error(error);
         }
@@ -47,7 +49,7 @@ export default function EditProduct() {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
             console.log("Product deleted successfully");
-
+            fetchProductData();
         } catch (error) {
             console.error("Error deleting product:", error);
         }

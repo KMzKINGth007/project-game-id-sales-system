@@ -5,18 +5,19 @@ export default function AdminUserEdit() {
   const [users, setUser] = useState([]);
   const [editingUser, setEditingUser] = useState(null);
 
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get('http://localhost:8889/user/showuser', {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      });
+      setUser(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
-    const fetchProductData = async () => {
-      try {
-        const response = await axios.get('http://localhost:8889/user/showuser', {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-        });
-        setUser(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchProductData()
+    fetchUserData()
   }, [])
 
   const handleEdit = (user) => {
@@ -35,6 +36,7 @@ export default function AdminUserEdit() {
       console.log("Edit User", response.data);
 
       setEditingUser(null);
+      fetchUserData();
     } catch (error) {
       console.error(error);
     }
@@ -47,7 +49,8 @@ export default function AdminUserEdit() {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       console.log("User deleted successfully");
-  }catch (error) {
+      fetchUserData();
+    } catch (error) {
       console.error("Error deleting user:", error);
     }
   };

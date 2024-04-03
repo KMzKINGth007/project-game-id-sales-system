@@ -12,6 +12,7 @@ import AdminUserEdit from '../layout/AminUserEdit';
 import UserProfile from '../layout/UserProfile';
 import ProductDetailsPage from '../layout/ProductDetailsPage';
 import CartPage from '../layout/CartPage';
+import PaymentPage from '../layout/PaymentPage';
 
 // สร้างเส้นทางสำหรับผู้ใช้ที่ยังไม่ล็อคอิน
 const guestRouter = createBrowserRouter([
@@ -48,6 +49,7 @@ const userRouter = createBrowserRouter([
       { path: '/userprofile', element: <UserProfile /> },
       { path: '/product/:id', element: <ProductDetailsPage /> },
       { path: '/cart', element: <CartPage /> },
+      { path: '/payment/:id', element: <PaymentPage /> },
     ],
 
   },

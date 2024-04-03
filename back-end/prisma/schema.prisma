@@ -38,25 +38,33 @@ model Product {
 }
 
 model cart {
-  id              Int       @id @default(autoincrement())
-  status          String?
-  quantity        Int?
-  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId          Int
-  product         Product   @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  productId       Int
-  Payment         Payment[]
+  id        Int       @id @default(autoincrement())
+  status    String?
+  quantity  Int?
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId    Int
+  product   Product   @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  productId Int
+  Payment   Payment[]
 }
 
 model Payment {
-  id            Int      @id @default(autoincrement())
-  paymentDate   DateTime
-  amount        Float
-  paymentMethod String
-  status        String
-  carts         cart     @relation(fields: [cartId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  cartId        Int
+  id              Int            @id @default(autoincrement())
+  paymentDate     DateTime
+  amount          Int
+  status          String
+  carts           cart           @relation(fields: [cartId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  cartId          Int
+  paymentMethod   paymentMethod? @relation(fields: [paymentMethodId], references: [id])
+  paymentMethodId Int?
 }
+
+model paymentMethod {
+  id         Int       @id @default(autoincrement())
+  nameMethod String
+  payment    Payment[]
+}
+
 
 model GameType {
   id       Int       @id @default(autoincrement())

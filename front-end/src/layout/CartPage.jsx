@@ -3,6 +3,8 @@ import axios from "axios";
 
 export default function CartPage() {
   const [cartItems, setCartItems] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [selectedTotalPrice, setSelectedTotalPrice] = useState(0);
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -24,11 +26,77 @@ export default function CartPage() {
       await axios.delete(`http://localhost:8889/cart/deleteCart/${id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
-      setCartItems(cartItems.filter((item) => item.id !== id));
+      const updatedCartItems = cartItems.filter((item) => item.id !== id);
+      setCartItems(updatedCartItems);
+      setSelectedItems(selectedItems.filter(itemId => itemId !== id));
     } catch (error) {
       console.error(error);
     }
   }
+
+  const updateQuantity = async (id, quantity) => {
+    if (quantity <= 0) {
+      return;
+    }
+    
+    try {
+      const response = await axios.put(`http://localhost:8889/cart/updateCart/${id}`, {
+        quantity: quantity
+      }, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      });
+      setCartItems(
+        cartItems.map((item) =>
+          item.id === id ? { ...item, quantity: response.data.quantity } : item
+        )
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const handleCheckboxChange = (id) => {
+    if (selectedItems.includes(id)) {
+      setSelectedItems(selectedItems.filter(itemId => itemId !== id));
+    } else {
+      setSelectedItems([...selectedItems, id]);
+    }
+  }
+
+  const handlePayment = async () => {
+    try {
+      // เตรียมข้อมูลสำหรับการชำระเงิน
+      const paymentData = {
+        paymentDate: new Date(), // วันที่ชำระเงิน (อาจต้องปรับเป็นรูปแบบที่ถูกต้อง)
+        amount: selectedTotalPrice, // จำนวนเงินที่ชำระ
+        status: "paid", // สถานะการชำระเงิน
+        cartId: selectedItems, // รายการสินค้าที่เลือก
+        paymentMethodId: 1 // ชำระด้วยแบบเดียวไปก่อน
+      };
+      await axios.post("http://localhost:8889/payment/createPayment", paymentData, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      });
+
+
+      setSelectedItems([]);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    const updateSelectedTotalPrice = () => {
+      const selectedItemsTotalPrice = cartItems.reduce((acc, item) => {
+        if (selectedItems.includes(item.id)) {
+          return acc + (item.product.price * item.quantity);
+        }
+        return acc;
+      }, 0);
+      setSelectedTotalPrice(selectedItemsTotalPrice);
+    }
+
+    updateSelectedTotalPrice();
+  }, [selectedItems, cartItems]);
 
   return (
     <div className="cart-page">
@@ -38,8 +106,15 @@ export default function CartPage() {
       ) : (
         <div className="cart-items">
           {cartItems.map((item) => (
-            <div key={item.id} className="flex justify-between">
-              <div className="w-[100px] h-[100px]">
+            <div key={item.id} className="flex justify-between items-center ">
+              <div>
+                <input 
+                  type="checkbox"
+                  checked={selectedItems.includes(item.id)}
+                  onChange={() => handleCheckboxChange(item.id)}
+                />
+              </div>
+              <div>
                 <img src={`http://localhost:8889/${item.product.imageUrl}`} alt={item.product.name} className="w-[80px]" />
               </div>
               <div className="item-details">
@@ -49,8 +124,13 @@ export default function CartPage() {
                 <p>ราคา: {item.product.price} บาท</p>
               </div>
               <div>
-                <p>จำนวน: {item.quantity}</p>
+                <p>จำนวน: 
+                  <button onClick={() => updateQuantity(item.id, item.quantity - 1)}>-</button>
+                  {item.quantity}
+                  <button onClick={() => updateQuantity(item.id, item.quantity + 1)}>+</button>
+                </p>
               </div>
+              <div>ราคารวม: {item.product.price * item.quantity} บาท</div>
               <div>
                 <button onClick={() => removeCart(item.id)}>ลบ</button>
               </div>
@@ -58,6 +138,10 @@ export default function CartPage() {
           ))}
         </div>
       )}
+      <div>
+        <p>ราคารวมที่เลือก: {selectedTotalPrice} บาท</p>
+        <button onClick={handlePayment}>ชำระเงิน</button>
+      </div>
     </div>
   );
 }

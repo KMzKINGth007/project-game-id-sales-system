@@ -23,7 +23,7 @@ exports.addProductToCard = async (req, res, next) => {
 
 exports.getCart = async (req, res, next) => {
     try {
-        const userId = req.user.id; // ดึงค่า userId จาก req.user.id
+        const userId = req.user.id; 
         const cart = await db.cart.findMany({
             where: {
                 userId: userId

@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
+import carticon from '../image/cart.png';
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+
 
 const guestNav = [
   { to: '/', text: 'Login' },
@@ -24,9 +26,7 @@ const adminNav = [
   { to: '/useredit', text: 'หน้าจัดการผู้ใช้' }
 ];
 
-const cart = [
-  { to: '/cart', text: 'carticon' },
-]
+
 
 export default function Header() {
   const { user, logout } = useAuth();
@@ -61,10 +61,10 @@ export default function Header() {
               ))
             )}
             {user?.id && (
-              <div className='flex justify-end'>
+              <div className='flex justify-end items-center'>
                 <div className=''>
                   <Link to='/cart'>
-                    <img src='path_to_your_image' alt='Shopping Cart' />
+                    <img src={carticon} className='w-[40px] h-[40px] rounded-full bg-gradient-to-r from-cyan-500 to-blue-500' alt='Shopping Cart' />
                   </Link>
                 </div>
                 <div className="dropdown dropdown-end">
