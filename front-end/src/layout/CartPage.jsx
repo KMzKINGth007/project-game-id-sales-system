@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function CartPage() {
   const [cartItems, setCartItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectedTotalPrice, setSelectedTotalPrice] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -67,18 +69,23 @@ export default function CartPage() {
     try {
       // เตรียมข้อมูลสำหรับการชำระเงิน
       const paymentData = {
-        paymentDate: new Date(), // วันที่ชำระเงิน (อาจต้องปรับเป็นรูปแบบที่ถูกต้อง)
-        amount: selectedTotalPrice, // จำนวนเงินที่ชำระ
-        status: "paid", // สถานะการชำระเงิน
-        cartId: selectedItems, // รายการสินค้าที่เลือก
-        paymentMethodId: 1 // ชำระด้วยแบบเดียวไปก่อน
+        paymentDate: new Date(),
+        amount: selectedTotalPrice,
+        status: "paid",
+        cartId: selectedItems,
+        paymentMethodId: 1
       };
-      await axios.post("http://localhost:8889/payment/createPayment", paymentData, {
+
+      // ส่งข้อมูลการชำระเงินไปยังเซิร์ฟเวอร์เพื่อบันทึกลงในฐานข้อมูล
+      const response = await axios.post("http://localhost:8889/payment/createPayment", paymentData, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
 
-
+      // ทำการล้างรายการที่เลือกหลังจากทำการชำระเงินสำเร็จ
       setSelectedItems([]);
+
+      // เมื่อชำระเงินสำเร็จ นำผู้ใช้ไปยังหน้า Payment โดยแสดง ID การชำระเงินที่สร้าง
+      navigate(`/payment/${response.data.id}`);
     } catch (error) {
       console.error(error);
     }

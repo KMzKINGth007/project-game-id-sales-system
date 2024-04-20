@@ -9,7 +9,9 @@ export default function PaymentPage() {
   useEffect(() => {
     const fetchPaymentDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:8889/payment/${paymentId}`);
+        const response = await axios.get(`http://localhost:8889/payment/getPaymentDetails/${paymentId}`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        });
         setPaymentDetails(response.data);
       } catch (error) {
         console.error(error);
@@ -26,9 +28,11 @@ export default function PaymentPage() {
   return (
     <div>
       <h1>รายละเอียดการชำระเงิน</h1>
+      <p>ID การชำระเงิน: {paymentDetails.id}</p>
       <p>วันที่ชำระเงิน: {paymentDetails.paymentDate}</p>
-      <p>จำนวนเงิน: {paymentDetails.amount} บาท</p>
-      {/* แสดงรายละเอียดอื่น ๆ ของการชำระเงินที่ต้องการ */}
+      <p>จำนวนเงิน: {paymentDetails.amount}</p>
+      <p>สถานะการชำระเงิน: {paymentDetails.status}</p>
+      {/* แสดงข้อมูลอื่นๆตามต้องการ */}
     </div>
   );
 }

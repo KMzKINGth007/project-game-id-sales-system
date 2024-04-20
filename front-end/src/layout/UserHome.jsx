@@ -28,7 +28,7 @@ export default function UserHome() {
       <h1>หน้าหลัก USER</h1>
       <AdsBar />
       <div className="w-full text-center"><p>สินค้าแนะนำ</p></div>
-      <div className="justify-center product-cart-container flex flex-wrap justify-start">
+      <div className="justify-center product-cart-container flex flex-wrap ">
         {products.map(product => (
           <div key={product.id} className="product-cart m-4 border rounded p-2 min-h-[400px] min-w-[100px] max-h-[500px] max-w-[250px]">
             <Link to={`/product/${product.id}`}>

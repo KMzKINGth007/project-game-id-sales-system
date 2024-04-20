@@ -5,5 +5,8 @@ const paymentController = require('../controllers/payment-controller')
 
 router.post('/createPayment', authenticate, paymentController.createPayment)
 router.get('/getPaymentDetails/:paymentId', authenticate, paymentController.getPaymentDetails)
+router.put('/updatePayment/:paymentId', authenticate, paymentController.updatePayment)
+router.delete('/deletePayment/:paymentId', authenticate, paymentController.deletePayment)
+router.get('/getAllPayment', authenticate, paymentController.getAllPayment)
 
 module.exports = router

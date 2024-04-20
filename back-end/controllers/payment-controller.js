@@ -28,14 +28,14 @@ exports.createPayment = async (req, res, next) => {
 
 exports.getPaymentDetails = async (req, res, next) => {
     try {
-        const paymentId = parseInt(req.params.id);
+        const paymentId = parseInt(req.params.paymentId);
 
         const payment = await db.payment.findUnique({
             where: {
                 id: paymentId
             },
             include: {
-                cart: true,
+                carts: true,
                 paymentMethod: true
             }
         });
@@ -46,3 +46,42 @@ exports.getPaymentDetails = async (req, res, next) => {
     }
 }
 
+
+
+exports.updatePayment = async (req, res, next) => {
+    try {
+        const paymentId = parseInt(req.params.id);
+        const payment = await db.payment.update({
+            where: {
+                id: paymentId
+            },
+            data: req.body
+        });
+        res.status(200).json(payment);
+    } catch (error) {
+        next(error);
+    }
+}
+
+exports.deletePayment = async (req, res, next) => {
+    try {
+        const paymentId = parseInt(req.params.id);
+        const payment = await db.payment.delete({
+            where: {
+                id: paymentId
+            }
+        });
+        res.status(200).json(payment);
+    } catch (error) {
+        next(error);
+    }
+}
+
+exports.getAllPayment = async (req, res, next) => {
+    try {
+        const payments = await db.payment.findMany();
+        res.status(200).json(payments);
+    } catch (error) {
+        next(error);
+    }
+}
