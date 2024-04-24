@@ -34,6 +34,9 @@ model Product {
   gameType    GameType @relation(fields: [gameTypeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   gameTypeId  Int
   imageUrl    String?
+  imageUrl2   String?
+  imageUrl3   String?
+  imageUrl4   String?
   carts       cart[]
 }
 
@@ -48,11 +51,16 @@ model cart {
   Payment   Payment[]
 }
 
+enum PayStatus {
+  paid
+  unpaid
+}
+
 model Payment {
   id              Int            @id @default(autoincrement())
   paymentDate     DateTime
   amount          Int
-  status          String
+  status          PayStatus      @default(unpaid)
   carts           cart           @relation(fields: [cartId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   cartId          Int
   paymentMethod   paymentMethod? @relation(fields: [paymentMethodId], references: [id])
@@ -65,9 +73,9 @@ model paymentMethod {
   payment    Payment[]
 }
 
-
 model GameType {
   id       Int       @id @default(autoincrement())
   TypeName String
+  ImageUrl String?
   product  Product[]
 }

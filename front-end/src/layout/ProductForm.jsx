@@ -121,7 +121,10 @@
       price: '',
       stock: '',
       gameTypeId: '',
-      imageUrl: null
+      imageUrl: null,
+      imageUrl2: null,
+      imageUrl3: null,
+      imageUrl4: null,
     });
   
     const handleChange = (e) => {
@@ -130,7 +133,9 @@
     }
   
     const handleFileChange = (e) => {
-      setProduct({ ...product, imageUrl: e.target.files[0] });
+      if (e.target.files.length > 0) {
+        setProduct({ ...product, [e.target.name]: e.target.files[0] });
+      }
     }
   
     const handleSubmit = async (e) => {
@@ -165,6 +170,30 @@
             <input
               type="file"
               name="imageUrl"
+              onChange={handleFileChange}
+            />
+          </label>
+          <label>
+            <span>Product Image 2</span>
+            <input
+              type="file"
+              name="imageUrl2"
+              onChange={handleFileChange}
+            />
+          </label>
+          <label>
+            <span>Product Image 3</span>
+            <input
+              type="file"
+              name="imageUrl3"
+              onChange={handleFileChange}
+            />
+          </label>
+          <label>
+            <span>Product Image 4</span>
+            <input
+              type="file"
+              name="imageUrl4"
               onChange={handleFileChange}
             />
           </label>
@@ -222,4 +251,5 @@
       </div>
     );
   }
+  
   

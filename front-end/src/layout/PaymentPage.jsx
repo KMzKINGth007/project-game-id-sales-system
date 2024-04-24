@@ -26,13 +26,14 @@ export default function PaymentPage() {
   }
 
   return (
-    <div>
-      <h1>รายละเอียดการชำระเงิน</h1>
-      <p>ID การชำระเงิน: {paymentDetails.id}</p>
-      <p>วันที่ชำระเงิน: {paymentDetails.paymentDate}</p>
-      <p>จำนวนเงิน: {paymentDetails.amount}</p>
-      <p>สถานะการชำระเงิน: {paymentDetails.status}</p>
-      {/* แสดงข้อมูลอื่นๆตามต้องการ */}
+    <div className="payment-details min-h-screen">
+      <div className="w-full border p-2 h-[500px] mb-10">
+        <h1>รายละเอียดการชำระเงิน</h1>
+        <p>ID การชำระเงิน: {paymentDetails.id}</p>
+        <p>วันที่ชำระเงิน: {paymentDetails.paymentDate}</p>
+        <p>จำนวนเงิน: {paymentDetails.amount}</p>
+        <p>สถานะการชำระเงิน: {paymentDetails.status}</p>
+      </div>
     </div>
   );
 }

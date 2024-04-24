@@ -4,7 +4,7 @@ import image3 from "../image/Pimage3.png";
 
 export default function HowToPayPage() {
     return (
-        <div className="how-to-page">
+        <div className="how-to-page min-h-screen">
             <div className="my-[20px] ml-[10px]">
                 <h1>วิธีสั่งซื้อและชำระเงิน</h1>
             </div>

@@ -8,5 +8,6 @@ router.post('/addProducts', authenticate, productController.createProduct)
 router.put('/:id', authenticate, productController.updateProduct)
 router.delete('/:id', authenticate, productController.deleteProduct)
 router.get('/:id', authenticate, productController.getProductById)
+router.get('/gameType/:gameTypeId', authenticate, productController.getProductsByGameType)
 
 module.exports = router

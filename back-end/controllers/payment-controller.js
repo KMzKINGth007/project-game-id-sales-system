@@ -1,7 +1,7 @@
 const db = require("../models/db");
 
 exports.createPayment = async (req, res, next) => {
-    try  {
+    try {
         const paymentDate = req.body.paymentDate;
         const amount = parseInt(req.body.amount);
         const status = req.body.status;
@@ -17,7 +17,7 @@ exports.createPayment = async (req, res, next) => {
                 paymentMethodId: paymentMethodId
             }
         })
-        
+
         res.status(201).json(payment);
     } catch (error) {
         next(error);
@@ -81,6 +81,23 @@ exports.getAllPayment = async (req, res, next) => {
     try {
         const payments = await db.payment.findMany();
         res.status(200).json(payments);
+    } catch (error) {
+        next(error);
+    }
+}
+
+exports.getUserPayments = async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const orders = await db.payment.findMany({
+            where: {
+                userId: userId
+            },
+            include: {
+                carts: true
+            }
+        })
+        res.status(200).json(orders);
     } catch (error) {
         next(error);
     }

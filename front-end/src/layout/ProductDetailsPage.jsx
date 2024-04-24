@@ -33,7 +33,6 @@ export default function ProductDetailsPage() {
       console.log(response.data);
     } catch (error) {
       console.error(error);
-
     }
   };
 
@@ -42,7 +41,12 @@ export default function ProductDetailsPage() {
       {product ? (
         <div className="w-full flex flex-wrap justify-center">
           <div className="w-[600px] border rounded p-2 h-[500px]">
-            <img src={`http://localhost:8889/${product.imageUrl}`} alt={product.name} className=" w-[100%] max-h-[400px]" />
+            <div><img src={`http://localhost:8889/${product.imageUrl}`} alt={product.name} className=" w-[100%] max-h-[350px]" /></div>
+            <div className="flex">
+            <img src={`http://localhost:8889/${product.imageUrl2}`} className=" w-[100%] max-h-[140px]" />
+            <img src={`http://localhost:8889/${product.imageUrl3}`} className=" w-[100%] max-h-[140px]" />
+            <img src={`http://localhost:8889/${product.imageUrl4}`} className=" w-[100%] max-h-[140px]" />
+            </div>
           </div>
           <div className="w-[600px] border rounded p-2 min-h-[200px] min-w-[100px]">
             <h2 className="product-name my-[10px] text-xl">{product.name}</h2>

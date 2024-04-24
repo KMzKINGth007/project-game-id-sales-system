@@ -21,10 +21,23 @@ export default function UserHome() {
     fetchProductData();
   }, []);
 
-  
+  const addToCart = async (productId) => {
+    try {
+      const response = await axios.post(`http://localhost:8889/cart/addProductToCard/${productId}`, {
+        userId: localStorage.getItem('userId'),
+        productId: productId,
+        quantity: 1
+      }, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
-    <div className="user-home">
+    <div className="user-home min-h-screen">
       <h1>หน้าหลัก USER</h1>
       <AdsBar />
       <div className="w-full text-center"><p>สินค้าแนะนำ</p></div>
@@ -39,7 +52,7 @@ export default function UserHome() {
               <p className="product-stock">Stock: {product.stock}</p>
             </Link>
             <div className="flex justify-end">
-              <button className="btn btn-outline">เพิ่มลงตะกร้า</button>
+              <button className="btn btn-outline" onClick={() => addToCart(product.id)}>เพิ่มลงตะกร้า</button>
               <button className="btn btn-outline">ซื้อเลย!</button>
             </div>
           </div>

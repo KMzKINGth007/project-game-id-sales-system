@@ -13,6 +13,8 @@ import UserProfile from '../layout/UserProfile';
 import ProductDetailsPage from '../layout/ProductDetailsPage';
 import CartPage from '../layout/CartPage';
 import PaymentPage from '../layout/PaymentPage';
+import Footer from '../layout/footer';
+import Order from '../layout/Order';
 
 // สร้างเส้นทางสำหรับผู้ใช้ที่ยังไม่ล็อคอิน
 const guestRouter = createBrowserRouter([
@@ -39,6 +41,7 @@ const userRouter = createBrowserRouter([
       <>
         <Header />
         <Outlet />
+        <Footer />
       </>
     ),
     children: [
@@ -50,6 +53,7 @@ const userRouter = createBrowserRouter([
       { path: '/product/:id', element: <ProductDetailsPage /> },
       { path: '/cart', element: <CartPage /> },
       { path: '/payment/:paymentId', element: <PaymentPage /> },
+      { path: '/order', element: <Order /> },
     ],
 
   },
