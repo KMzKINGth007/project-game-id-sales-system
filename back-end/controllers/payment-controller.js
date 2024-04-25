@@ -27,55 +27,61 @@ exports.createPayment = async (req, res, next) => {
 
 
 exports.getPaymentDetails = async (req, res, next) => {
-    try {
-        const paymentId = parseInt(req.params.paymentId);
+  try {
+      const paymentId = parseInt(req.params.paymentId);
 
-        const payment = await db.payment.findUnique({
-            where: {
-                id: paymentId
-            },
-            include: {
-                carts: true,
-                paymentMethod: true
-            }
-        });
+      const payment = await db.payment.findUnique({
+          where: {
+              id: paymentId
+          },
+          include: {
+              carts: {
+                  include: {
+                      product: true
+                  }
+              },
+              paymentMethod: true
+          }
+      });
 
-        res.status(200).json(payment);
-    } catch (error) {
-        next(error);
-    }
+      res.status(200).json(payment);
+  } catch (error) {
+      next(error);
+  }
 }
-
-
 
 exports.updatePayment = async (req, res, next) => {
-    try {
-        const paymentId = parseInt(req.params.id);
-        const payment = await db.payment.update({
-            where: {
-                id: paymentId
-            },
-            data: req.body
-        });
-        res.status(200).json(payment);
-    } catch (error) {
-        next(error);
-    }
+  try {
+    const paymentId = parseInt(req.params.paymentId);
+
+    const payment = await db.payment.update({
+      where: { id: paymentId },
+      data: { status: 'paid' }
+    });
+
+    res.status(200).json(payment);
+  } catch (error) {
+    next(error);
+  }
 }
 
+
+
 exports.deletePayment = async (req, res, next) => {
-    try {
-        const paymentId = parseInt(req.params.id);
-        const payment = await db.payment.delete({
-            where: {
-                id: paymentId
-            }
-        });
-        res.status(200).json(payment);
-    } catch (error) {
-        next(error);
-    }
+  try {
+      const paymentId = parseInt(req.params.paymentId); // แก้จาก req.params.id เป็น req.params.paymentId
+      await db.payment.delete({
+          where: {
+              id: paymentId // ใส่ ID ของ payment ที่ต้องการลบ
+          }
+      });
+      res.status(200).json({ message: 'Payment deleted successfully' }); // ส่งข้อความแสดงว่าการลบเสร็จสมบูรณ์
+  } catch (error) {
+      next(error);
+  }
 }
+
+
 
 exports.getAllPayment = async (req, res, next) => {
     try {
@@ -94,4 +100,34 @@ exports.getAllPayment = async (req, res, next) => {
         next(error);
       }
 }
+
+exports.getPaymentById = async (req, res, next) => {
+    try {
+      const paymentId = parseInt(req.params.id);
+      const payment = await db.payment.findUnique({
+        where: {
+          id: paymentId
+        },
+        include: {
+          carts: {
+            include: {
+              user: true,
+              product: {
+                include: {
+                  gameType: true
+                }
+              }
+            }
+          }
+        }
+      });
+      if (!payment) {
+        return res.status(404).json({ error: 'Payment not found.' });
+      }
+      res.status(200).json(payment);
+    } catch (error) {
+      next(error);
+    }
+  };
+  
 

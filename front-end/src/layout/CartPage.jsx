@@ -8,9 +8,7 @@ export default function CartPage() {
   const [selectedTotalPrice, setSelectedTotalPrice] = useState(0);
   const navigate = useNavigate();
 
-  const handleOrderPage = () => {
-    navigate('/order');
-  }
+
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -154,10 +152,9 @@ export default function CartPage() {
           <p className="align-items">ราคารวมที่เลือก: {selectedTotalPrice} บาท</p>
         </div>
         <button className="btn btn-outline btn-info" onClick={handlePayment}>ชำระเงิน</button>
+        <button className="btn btn-outline btn-primary mx-2" onClick={() => navigate('/order')}>การสั่งซื้อของฉัน</button>
       </div>
-      <div>
-        <button className="btn btn-outline btn-accent" onClick={handleOrderPage}>การสั่งซื้อของฉัน</button>
-      </div>
+
     </div>
   );
 }
