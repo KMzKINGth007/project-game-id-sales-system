@@ -15,6 +15,7 @@ import CartPage from '../layout/CartPage';
 import PaymentPage from '../layout/PaymentPage';
 import Footer from '../layout/footer';
 import Order from '../layout/Order';
+import AllPaymentPgae from '../layout/AllPaymentPgae';
 
 // สร้างเส้นทางสำหรับผู้ใช้ที่ยังไม่ล็อคอิน
 const guestRouter = createBrowserRouter([
@@ -72,6 +73,7 @@ const adminRouter = createBrowserRouter([
     children: [
       { index: true, element: <AdminHome /> },
       { path: '/useredit', element: <AdminUserEdit /> },
+      { path: '/allpayment', element: <AllPaymentPgae /> },
     ],
   },
 ]);

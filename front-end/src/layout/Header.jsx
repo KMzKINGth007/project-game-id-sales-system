@@ -23,7 +23,8 @@ const userMenu = [
 
 const adminNav = [
   { to: '/', text: 'หน้าจัดการสินค้า' },
-  { to: '/useredit', text: 'หน้าจัดการผู้ใช้' }
+  { to: '/useredit', text: 'หน้าจัดการผู้ใช้' },
+  { to: '/allpayment', text: 'หน้าการคําสั่งซื้อของผู้ใช้' }
 ];
 
 

@@ -79,26 +79,19 @@ exports.deletePayment = async (req, res, next) => {
 
 exports.getAllPayment = async (req, res, next) => {
     try {
-        const payments = await db.payment.findMany();
+        const payments = await db.payment.findMany({
+          include: {
+            carts: {
+              include: {
+                product: true,
+                user: true,
+              },
+            },
+          },
+        });
         res.status(200).json(payments);
-    } catch (error) {
+      } catch (error) {
         next(error);
-    }
+      }
 }
 
-exports.getUserPayments = async (req, res, next) => {
-    try {
-        const userId = req.user.id;
-        const orders = await db.payment.findMany({
-            where: {
-                userId: userId
-            },
-            include: {
-                carts: true
-            }
-        })
-        res.status(200).json(orders);
-    } catch (error) {
-        next(error);
-    }
-}

@@ -8,6 +8,6 @@ router.get('/getPaymentDetails/:paymentId', authenticate, paymentController.getP
 router.put('/updatePayment/:paymentId', authenticate, paymentController.updatePayment)
 router.delete('/deletePayment/:paymentId', authenticate, paymentController.deletePayment)
 router.get('/getAllPayment', authenticate, paymentController.getAllPayment)
-router.get('/getUserPayments', authenticate, paymentController.getUserPayments)
 
+ 
 module.exports = router
